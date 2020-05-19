@@ -1,0 +1,29 @@
+###########################
+## CNA_TRADE_2019 PROJECT##
+###########################
+
+# Kernel Module Compile Results
+*.mod*
+*.cmd
+.tmp_versions/
+modules.order
+Module.symvers
+Mkfile.old
+dkms.conf
+.vscode
+Cmake*
+cmake*
+vgcore*
+*.html
+
+##### TRADE ####
+
+### Binaries
+trade
+### AI-BOT
+installation/
+node-modules
+
+# PYTHON
+__pycache__
+tmp
