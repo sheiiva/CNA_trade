@@ -25,5 +25,5 @@ installation/
 node_modules
 
 # PYTHON
-__pycache__
+sources/__pycache__
 tmp
