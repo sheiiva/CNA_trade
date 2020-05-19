@@ -10,6 +10,8 @@
 #           Patricia Monfa-Matas    <patricia.monfa-matas@epitech.eu>
 #
 
+from sources.Parser import Parser
+
 class Trade():
 
     """
@@ -23,7 +25,9 @@ class Trade():
         Initialization of Trade Class's attributes.
         """
         self._state = True
+        self._parser = Parser()
 
+        # Run program's main loop
         self.run()
 
     def getInput(self) -> str:
@@ -48,4 +52,5 @@ class Trade():
         """
 
         while (self._state):
-            inputs = self.getInput()
+            strInput = self.getInput()
+            inputs = self._parser.toList(strInput)

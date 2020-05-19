@@ -1,6 +1,3 @@
-#!/usr/bin/env python3
-#coding: utf-8
-
 #  B4 - COMPUTER NUMERICAL ANALYSIS
 #      -----------------------
 #           TRADE PROJECT
@@ -13,14 +10,18 @@
 #           Patricia Monfa-Matas    <patricia.monfa-matas@epitech.eu>
 #
 
+from copy import copy
 
-from sources.Trade import Trade
+class Parser():
 
+    """
+    Main class of the Trade project.
+    """
 
-def main():
-    
-    Trade()
+    def toList(self, string:str) -> list:
 
+        """
+        Return a list of all the words in "string".
+        """
 
-if __name__ == "__main__":
-    main()
+        return string.split()
