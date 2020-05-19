@@ -12,15 +12,19 @@
 
 
 class Compute():
-
     """
-    Compute class. Provide computing tools or specific trading computaitons.
+    Provide computing tools or specific trading computations.
     """
 
-    def isInt(self, value):
-
+    def isInt(self, value) -> bool:
         """
-        Return True if 'value' is an int. Return False otherwise. 
+        Check for value's type.
+
+        Args:
+            value ([type]): Value to be tested.
+
+        Returns:
+            bool: Return True if 'value' is an int. Return False otherwise.
         """
 
         try:
@@ -30,10 +34,15 @@ class Compute():
         else:
             return True
 
-    def isFloat(self, value):
-
+    def isFloat(self, value) -> bool:
         """
-        Return True if 'value' is a float. Return False otherwise. 
+        Check for value's type.
+
+        Args:
+            value ([type]): Value to be tested.
+
+        Returns:
+            bool: Return True if 'value' is a float. Return False otherwise.
         """
 
         try:

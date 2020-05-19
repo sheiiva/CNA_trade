@@ -18,7 +18,10 @@ from sources.Trade import Trade
 
 
 def main():
-    
+    """
+    Main function of the Trade Project.
+    """
+
     Trade()
 
 

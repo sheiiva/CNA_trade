@@ -12,16 +12,21 @@
 
 from copy import copy
 
-class Parser():
 
+class Parser():
     """
     Main class of the Trade project.
     """
 
-    def toList(self, string:str) -> list:
-
+    def toList(self, string: str) -> list:
         """
-        Return a list of all the words in "string".
+        Parse input string into a list.
+
+        Args:
+            string (str): String to be parsed.
+
+        Returns:
+            list: A list of all the words in 'string'.
         """
 
         return string.split()

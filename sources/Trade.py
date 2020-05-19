@@ -13,8 +13,8 @@
 from sources.Parser import Parser
 from sources.Compute import Compute
 
-## DEFINE CANDLE FORMAT
-CANDLE_FORMAT  = {
+# DEFINE CANDLE FORMAT
+CANDLE_FORMAT = {
     # pair:   The chart to which candle belongs.
     "PAIR":     0,
     # date:   Unix timestamp, which represents a certain date and time.
@@ -22,7 +22,7 @@ CANDLE_FORMAT  = {
     # high:   The highest price traded in this candle.
     "HIGH":     2,
     # low:    The lowest price traded in this candle.
-    "LOW" :     3,
+    "LOW":      3,
     # open:   The opening price of this candle.
     "OPEN":     4,
     # close:  The closing price of this candle.
@@ -32,18 +32,17 @@ CANDLE_FORMAT  = {
 }
 
 # DEFINE INPUT FORMAT
-COMMAND   = 0
-VARIABLE  = 1
-VALUE     = 2
+COMMAND = 0
+VARIABLE = 1
+VALUE = 2
+
 
 class Trade():
-
     """
     Main class of the Trade project.
     """
 
     def __init__(self):
-
         """
         Initialization of Trade Class's attributes.
         """
@@ -58,9 +57,11 @@ class Trade():
         self.run()
 
     def getInput(self) -> str:
-
         """
         Get input and catch potential errors.
+
+        Returns:
+            str: Input received from stdin.
         """
 
         try:
@@ -73,11 +74,13 @@ class Trade():
         else:
             return inputs
 
-    def initSettings(self, inputs) -> None:
-
+    def initSettings(self, inputs: str) -> None:
         """
         Parse the input passed as argument
         and initialise corresponding class's attribute.
+
+        Args:
+            inputs (str): Input to be parsed.
         """
 
         if inputs[VARIABLE] is "candle_format":
@@ -94,7 +97,6 @@ class Trade():
         self._settings[inputs[VARIABLE]] = value
 
     def run(self) -> None:
-
         """
         Main loop of the Trade project.
         """
