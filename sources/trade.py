@@ -1,6 +1,3 @@
-#!/usr/bin/env python3
-#coding: utf-8
-
 #  B4 - COMPUTER NUMERICAL ANALYSIS
 #      -----------------------
 #           TRADE PROJECT
@@ -13,11 +10,24 @@
 #           Patricia Monfa-Matas <patricia.monfa-matas@epitech.eu>
 #
 
-from sources.trade import Trade
+class Trade():
 
-def main():
-    
-    Trade()
+    """
+    Main class of the Trade project.
+    """
 
-if __name__ == "__main__":
-    main()
+    def __init__(self):
+
+        """
+        Initialization of Trade Class's attributes.
+        """
+
+        self.run()
+
+    def run(self) -> None:
+
+        """
+        Main loop of the Trade project.
+        """
+
+        return
