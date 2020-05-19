@@ -6,8 +6,8 @@
 # https://github.com/sheiiva/CNA_trade
 #
 # (05/19/2020)
-# Authors:  Corentin COUTRET-ROZET <corentin.rozet@epitech.eu>
-#           Patricia Monfa-Matas <patricia.monfa-matas@epitech.eu>
+# Authors:  Corentin COUTRET-ROZET  <corentin.rozet@epitech.eu>
+#           Patricia Monfa-Matas    <patricia.monfa-matas@epitech.eu>
 #
 
 class Trade():

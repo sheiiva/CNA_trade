@@ -1,6 +1,15 @@
-###########################
-## CNA_TRADE_2019 PROJECT##
-###########################
+#  B4 - COMPUTER NUMERICAL ANALYSIS
+#      -----------------------
+#           TRADE PROJECT
+#
+# Repository:
+# https://github.com/sheiiva/CNA_trade
+#
+# (05/19/2020)
+# Authors:  Corentin COUTRET-ROZET  <corentin.rozet@epitech.eu>
+#           Patricia Monfa-Matas    <patricia.monfa-matas@epitech.eu>
+#
+
 
 # Kernel Module Compile Results
 *.mod*
