@@ -16,13 +16,30 @@ class Trade():
     Main class of the Trade project.
     """
 
+
     def __init__(self):
 
         """
         Initialization of Trade Class's attributes.
         """
+        self._state = True
 
         self.run()
+
+    def getInput(self) -> str:
+
+        """
+        Get input and catch potential errors.
+        """
+
+        try:
+            inputs = input()
+        except EOFError:
+            exit(84)
+        except InterruptedError:
+            exit(84)
+        else:
+            return inputs
 
     def run(self) -> None:
 
@@ -30,4 +47,5 @@ class Trade():
         Main loop of the Trade project.
         """
 
-        return
+        while (self._state):
+            inputs = self.getInput()

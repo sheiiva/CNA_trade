@@ -13,11 +13,14 @@
 #           Patricia Monfa-Matas    <patricia.monfa-matas@epitech.eu>
 #
 
+
 from sources.trade import Trade
 
+
 def main():
-    
+
     Trade()
+
 
 if __name__ == "__main__":
     main()
