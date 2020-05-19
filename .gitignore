@@ -22,7 +22,7 @@ vgcore*
 trade
 ### AI-BOT
 installation/
-node-modules
+node_modules
 
 # PYTHON
 __pycache__
