@@ -1,6 +1,3 @@
-#!/usr/bin/env python3
-#coding: utf-8
-
 #  B4 - COMPUTER NUMERICAL ANALYSIS
 #      -----------------------
 #           TRADE PROJECT

@@ -20,7 +20,7 @@ from sources.Rate import Rate
 class TestRate(unittest.TestCase):
 
     def test_normalCase(self):
-        
+
         rate = Rate("USDT_BTC,1516147200,11600.12523891,11032.9211865,11041.42197477,11214.06052489,4123273.6568455")
 
         self.assertEqual(rate._state, globals.VALID)
@@ -34,25 +34,25 @@ class TestRate(unittest.TestCase):
         self.assertEqual(rate._volume, 4123273.6568455)
 
     def test_wrongFormat(self):
-        
+
         rate = Rate("USDT_BTC,1516147200,11600.12523891,11032.9211865,11041.42197477,11214.06052489")
 
         self.assertEqual(rate._state, globals.INVALID)
 
     def test_wrongPairFormat(self):
-        
+
         rate = Rate("USDT-BTC,1516147200,11600.12523891,11032.9211865,11041.42197477,11214.06052489,4123273.6568455")
 
         self.assertEqual(rate._state, globals.INVALID)
 
     def test_wrongPairFirstIsNotValidCurrency(self):
-        
+
         rate = Rate("WRONG_BTC,1516147200,11600.12523891,11032.9211865,11041.42197477,11214.06052489,4123273.6568455")
 
         self.assertEqual(rate._state, globals.INVALID)
 
     def test_wrongPairSecondIsNotValidCurrency(self):
-        
+
         rate = Rate("USDT_WRONG,1516147200,11600.12523891,11032.9211865,11041.42197477,11214.06052489,4123273.6568455")
 
         self.assertEqual(rate._state, globals.INVALID)
