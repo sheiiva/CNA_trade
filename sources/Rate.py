@@ -11,7 +11,7 @@
 #
 
 
-import sources.include as globals
+import includes.globalDefinitions as globals
 from sources.Utilities import Utilities
 
 
@@ -116,8 +116,8 @@ class Rate():
 
         self.initPair(items[globals.CANDLE_FORMAT["PAIR"]])
         self._date = self.initDate(items[globals.CANDLE_FORMAT["DATE"]])
-        self._high = self.initPrice(items[globals.CANDLE_FORMAT["LOW"]])
-        self._low = self.initPrice(items[globals.CANDLE_FORMAT["HIGH"]])
+        self._high = self.initPrice(items[globals.CANDLE_FORMAT["HIGH"]])
+        self._low = self.initPrice(items[globals.CANDLE_FORMAT["LOW"]])
         self._open = self.initPrice(items[globals.CANDLE_FORMAT["OPEN"]])
         self._close = self.initPrice(items[globals.CANDLE_FORMAT["CLOSE"]])
         self._volume = self.initPrice(items[globals.CANDLE_FORMAT["VOLUME"]])
