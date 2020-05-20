@@ -12,7 +12,6 @@
 
 
 NAME 	=	trade
-T_NAME	=	unitests
 
 RM 		=	@rm -f
 PRINT	=	@echo -e
@@ -20,6 +19,11 @@ PRINT	=	@echo -e
 INCLUDE		=	includes/
 SOURCES		=	sources/
 TESTS		=	tests/
+
+
+TESTS_SRC	=	$(TESTS)t_main.py		\
+				$(TESTS)t_Rate.py
+
 
 $(NAME):
 	@cp $(SOURCES)main.py $@
@@ -30,19 +34,18 @@ all: $(NAME)
 
 clean:
 	$(PRINT) "\n------->\tREMOVE PYCACHE\n"
-	$(RM) __pycache__
+	$(RM) -r __pycache__
+	$(RM) -r $(INCLUDE)__pycache__
+	$(RM) -r $(SOURCES)__pycache__
+	$(RM) -r $(TESTS)__pycache__
 
 fclean: clean
 	$(PRINT) "\n------->\tREMOVE BINARIES\n"
 	$(RM) $(NAME)
-	$(RM) $(TESTS)$(T_NAME)
 
 tests_run: fclean
-	@cp $(TESTS)t_main.py $(TESTS)$(T_NAME)
-	@chmod +x $(TESTS)$(T_NAME)
-	$(PRINT) "\n------->\tTESTS BINARY CREATED\n"
-	$(PRINT) "\nLET'S TEST:"
-	@./$(TESTS)$(T_NAME)
+	$(PRINT) "\nLET'S TEST:\n"
+	@python -m unittest -v $(TESTS_SRC)
 
 re: fclean all
 
