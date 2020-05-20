@@ -22,6 +22,7 @@ TESTS		=	tests/
 
 
 TESTS_SRC	=	$(TESTS)t_main.py		\
+				$(TESTS)t_Candle.py		\
 				$(TESTS)t_Rate.py
 
 
