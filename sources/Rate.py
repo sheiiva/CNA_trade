@@ -55,8 +55,7 @@ class Rate():
         if len(inputPair) is not 2:
             # print("ERROR INPUT: Wrong PAIR")
             pass
-        elif isValidCurrency(inputPair[0]) is False\
-            or isValidCurrency(inputPair[1]) is False:
+        elif isValidCurrency(inputPair[0]) is False or isValidCurrency(inputPair[1]) is False:
             # print("ERROR INPUT: Wrong PAIR")
             pass
         else:
@@ -96,7 +95,6 @@ class Rate():
             return None
         return float(inputPrice)
 
-
     def parseInputRate(self, inputRate: str):
         """
         Parse the inputRate into class' attributes.
@@ -122,6 +120,6 @@ class Rate():
         self._close = self.initPrice(items[globals.CANDLE_FORMAT["CLOSE"]])
         self._volume = self.initPrice(items[globals.CANDLE_FORMAT["VOLUME"]])
         # Change the Rate's state to VALID if all of its attributes are valid
-        if all([self._currency1, self._currency2,self._date, self._high,
+        if all([self._currency1, self._currency2, self._date, self._high,
                 self._low, self._open, self._open, self._close, self._volume]):
             self._state = globals.VALID

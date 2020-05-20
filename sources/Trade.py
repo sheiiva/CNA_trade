@@ -15,6 +15,7 @@ import includes.globalDefinitions as globals
 from sources.Utilities import Utilities
 from sources.Candle import Candle
 
+
 class Trade():
     """
     Main class of the Trade project.
