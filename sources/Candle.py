@@ -11,7 +11,7 @@
 #
 
 
-import sources.include as globals
+import includes.globalDefinitions as globals
 from sources.Rate import Rate
 
 
@@ -40,6 +40,7 @@ class Candle():
         inputsRate = inputCandle.split(sep=";")
         if len(inputsRate) is not 3:
             # print("INPUT ERROR: might be three rates per candle.")
+            self._state = globals.INVALID
             return None
 
         outputRates = [Rate(inputsRate[0]), Rate(inputsRate[1]), Rate(inputsRate[2])]
