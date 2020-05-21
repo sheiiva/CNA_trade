@@ -44,9 +44,8 @@ class Rate():
         """
 
         def isValidCurrency(inputCurrency: str) -> bool:
-            for currency in globals.currencies:
-                if currency == inputCurrency:
-                    return True
+            if inputCurrency in globals.currencies:
+                return True
             return False
 
         # Parse the pair of currencies

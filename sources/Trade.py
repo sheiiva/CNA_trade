@@ -15,6 +15,7 @@ import includes.globalDefinitions as globals
 from sources.utils.Logger import Logger
 from sources.utils.Utilities import Utilities
 from sources.Candle import Candle
+from sources.Stack import Stack
 
 
 class Trade():
@@ -26,6 +27,7 @@ class Trade():
         self._state = True
         self._settings = {}
         self._candles = []
+        self._stack = Stack()
 
         # Attributes to other classes
         self._utils = Utilities()
@@ -44,7 +46,6 @@ class Trade():
         try:
             inputs = input()
         except EOFError:
-            print(self._settings)
             exit(84)
         except KeyboardInterrupt:
             Logger("\nexit.", logType="INFO")
@@ -72,6 +73,8 @@ class Trade():
         else:
             value = inputs[globals.VALUE]
 
+        if inputs[globals.VARIABLE] == "initial_stack":
+                self._stack._USDT = value
         self._settings[inputs[globals.VARIABLE]] = value
 
     def fetchCommand(self, command: list) -> None:
@@ -90,8 +93,7 @@ class Trade():
                 if newCandle._state == globals.VALID:
                     self._candles.append(newCandle)
             elif f"{command[1]} {command[2]}" == "game stacks":
-                # print("updating stack")
-                pass
+                self._stack.update_s(command[3])
         else:
             Logger("Unrecognized command.")
 
