@@ -13,7 +13,7 @@
 
 import includes.globalDefinitions as globals
 from sources.utils.Logger import Logger
-from sources.Utilities import Utilities
+from sources.utils.Utilities import Utilities
 
 
 class Rate():
