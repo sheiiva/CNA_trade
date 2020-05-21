@@ -12,6 +12,7 @@
 
 
 import includes.globalDefinitions as globals
+from sources.utils.Logger import Logger
 from sources.Rate import Rate
 
 
@@ -39,7 +40,7 @@ class Candle():
         # Split input string (cut by a semi-colon)
         inputsRate = inputCandle.split(sep=";")
         if len(inputsRate) is not 3:
-            # print("INPUT ERROR: might be three rates per candle.")
+            Logger("There might be three rates per candle.")
             self._state = globals.INVALID
             return None
 
@@ -47,6 +48,6 @@ class Candle():
         # Check for rates' validity
         for rate in outputRates:
             if rate._state is globals.INVALID:
-                # print("ERROR: candle is invalid")
+                Logger("Candle is invalid")
                 self._state = globals.INVALID
         return outputRates

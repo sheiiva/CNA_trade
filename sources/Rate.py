@@ -12,6 +12,7 @@
 
 
 import includes.globalDefinitions as globals
+from sources.utils.Logger import Logger
 from sources.Utilities import Utilities
 
 
@@ -53,10 +54,10 @@ class Rate():
 
         # Check the pair of currencies
         if len(inputPair) is not 2:
-            # print("ERROR INPUT: Wrong PAIR")
+            Logger("Might be a pair of currencies such as `currency_currency`.")
             pass
         elif isValidCurrency(inputPair[0]) is False or isValidCurrency(inputPair[1]) is False:
-            # print("ERROR INPUT: Wrong PAIR")
+            Logger("Wrong currency.")
             pass
         else:
             self._currency1 = inputPair[0]
@@ -74,7 +75,7 @@ class Rate():
         """
 
         if Utilities().isInt(inputDate) is False:
-            # print("ERROR INPUT: Rate's date might be an integer.")
+            Logger("Rate's date might be an integer.")
             return None
 
         return int(inputDate)
@@ -91,7 +92,7 @@ class Rate():
         """
 
         if Utilities().isFloat(inputPrice) is False:
-            # print("ERROR INPUT: Prices might be floats.")
+            Logger("Prices might be floats.")
             return None
         return float(inputPrice)
 
@@ -109,7 +110,7 @@ class Rate():
         # Split input string (cut by a colon)
         items = inputRate.split(sep=",")
         if len(items) is not 7:
-            # print("ERROR INPUT: Wrong input rate")
+            Logger("Wrong input rate.")
             return None
 
         self.initPair(items[globals.CANDLE_FORMAT["PAIR"]])

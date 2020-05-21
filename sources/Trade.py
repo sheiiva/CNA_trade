@@ -12,6 +12,7 @@
 
 
 import includes.globalDefinitions as globals
+from sources.utils.Logger import Logger
 from sources.Utilities import Utilities
 from sources.Candle import Candle
 
@@ -43,20 +44,21 @@ class Trade():
         try:
             inputs = input()
         except EOFError:
+            print(self._settings)
             exit(84)
         except KeyboardInterrupt:
-            print("\nexit.")
+            Logger("\nexit.", logType="INFO")
             exit(0)
         else:
             return inputs
 
-    def initSettings(self, inputs: str) -> None:
+    def initSettings(self, inputs: list) -> None:
         """
         Parse the input passed as argument
         and initialise corresponding class's attribute.
 
         Args:
-            inputs (str): Input to be parsed.
+            inputs (list): Input to be parsed.
         """
 
         if inputs[globals.VARIABLE] == "candle_format":
@@ -80,7 +82,7 @@ class Trade():
             command (list): the command to be checked and executed.
         """
 
-        if command[0] == "setting":
+        if command[0] == "settings" and len(command) is 3:
             self.initSettings(command)
         elif command[0] == "update" and len(command) == 4:
             if f"{command[1]} {command[2]}" == "game next_candles":
@@ -91,8 +93,7 @@ class Trade():
                 # print("updating stack")
                 pass
         else:
-            # print("INPUT ERROR: Unrecognized command.")
-            pass
+            Logger("Unrecognized command.")
 
     def run(self) -> None:
         """
