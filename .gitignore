@@ -34,7 +34,5 @@ installation/
 node_modules
 
 # PYTHON
-includes/__pycache__
-sources/__pycache__
-tests/__pycache__
-tmp
+*__pycache__*
+*tmp*
