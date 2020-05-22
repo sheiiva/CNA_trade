@@ -14,7 +14,7 @@
 import unittest
 
 import includes.globalDefinitions as globals
-from sources.Utilities import Utilities
+from sources.utils.Utilities import Utilities
 
 
 class TestUtilities(unittest.TestCase):

@@ -32,8 +32,6 @@ class Stack():
 
         #
         self._utils = Utilities()
-        self.showStack()
-
 
     def updateCurrency(self, currency: str, value: str) -> None:
         """
@@ -45,11 +43,11 @@ class Stack():
         """
 
         if currency == "USDT":
-            self._USDT = value
+            self._USDT = float(value)
         elif currency == "ETH":
-            self._ETH = value
+            self._ETH = float(value)
         elif currency == "BTC":
-            self._BTC = value
+            self._BTC = float(value)
 
     def update_s(self, updateCommand: str) -> None:
         """
@@ -74,8 +72,6 @@ class Stack():
                 Logger("Wrong value to update for {}.".format(update[CURRENCY]))
             else:
                 self.updateCurrency(currency=update[CURRENCY], value=update[VALUE])
-
-        self.showStack()
 
     def showStack(self) -> None:
         """
