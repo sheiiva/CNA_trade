@@ -13,10 +13,25 @@
 
 import unittest
 
+import sys
+from io import StringIO
+
 import includes.globalDefinitions as globals
 from sources.Stack import Stack
 
+
 class TestStack(unittest.TestCase):
+
+    # def __init__(self, methodName='runTest'):
+    #     super(TestStack, self).__init__(methodName=methodName)
+    #     self._tmpStream = None
+
+    # def setUp(self):
+    #     super(TestStack, self).setUp()
+    #     # Create a in-memory stream
+    #     self._tmpStream = StringIO()
+    #     # Replace default stderr with the tempory stream file.
+    #     sys.stderr = self._tmpStream
 
     def test_constructor(self):
         stack = Stack()
@@ -78,3 +93,10 @@ class TestStack(unittest.TestCase):
         self.assertEqual(stack._USDT, 12.1)
         self.assertEqual(stack._ETH, 0)
         self.assertEqual(stack._BTC, 1.)
+
+    # def tearDown(self):
+    #     super(TestStack, self).tearDown()
+    #     # Set the standard error output to the original output.
+    #     sys.stderr = sys.__stderr__
+    #     # Close the in-memory stream
+    #     self._tmpStream.close()
