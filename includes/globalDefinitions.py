@@ -15,7 +15,7 @@ USDT = "USDT"
 ETH = "ETH"
 BTC = "BTC"
 currencies = [USDT, ETH, BTC]
-
+ 
 # DEFINE CANDLE FORMAT
 CANDLE_FORMAT = {
     # pair:   The chart to which candle belongs.
@@ -33,7 +33,7 @@ CANDLE_FORMAT = {
     # volume: The total volume that has been traded in this candle.
     "VOLUME":   6
 }
-
+ 
 # DEFINE INPUT SETTING FORMAT
 COMMAND = 0
 VARIABLE = 1
