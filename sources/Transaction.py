@@ -73,7 +73,6 @@ class Transaction:
             amount (int): Specifies how much to sell.
         """
 
-
         if self.isValidCurrency(currencyReceived) is False\
         or self.isValidCurrency(currencySold) is False:
             Logger("Wrong currencies for selling transaction.")
@@ -100,3 +99,5 @@ class Transaction:
         for candle in candles:
             for i in range(3):
                 ret[i].append(getClosingPrices(candle, i))
+
+        return [last[-self._n:] for last in ret]
