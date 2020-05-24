@@ -17,6 +17,7 @@ import includes.globalDefinitions as globals
 from sources.utils.Logger import Logger
 from sources.Candle import Candle
 from sources.Rate import Rate
+from sources.Stack import Stack
 
 class Transaction:
 
@@ -44,7 +45,7 @@ class Transaction:
         Don't take any position.
         """
 
-        print("pass")
+        print("no_moves")
 
     def buy(self, currencyPaidWith: str, currencyReceived: str, amount: int):
         """
@@ -101,3 +102,46 @@ class Transaction:
                 ret[i].append(getClosingPrices(candle, i))
 
         return [last[-self._n:] for last in ret]
+
+    def computeSimpleMeanAverage(self) -> int:
+        """
+        Compute a Simple Mean Average (SMA) of the last `._n` closing prices.
+
+        Returns:
+            int: The Simple Mean Average (SMA).
+        """
+
+        return [sum(line)/len(line) for line in self._n_lastClosePrices]
+
+    def comput_standarDeviation(self) -> int:
+        """
+        Compute a Standard Deviation (std) of the last `._n` closing prices.
+
+        Returns:
+            int: The standard deviation (std).
+        """
+
+        return [np.std(line) for line in self._n_lastClosePrices]
+
+    def strategy(self, candles: Candle, stack: Stack):
+
+        sma = self.computeSimpleMeanAverage()
+        std = self.comput_standarDeviation()
+
+        def isInUpperBand(value: float) -> bool:
+            if value <= (sma + (2 * std)) and value >= (sma + std):
+                return True
+            return False
+        
+        def isInLowerBand(value: float) -> bool:
+            if value >= (sma - (2 * std)) and value <= (sma + std):
+                return True
+            return False
+
+        # for i in range(len(globals.currencies)):
+        if isInUpperBand(candles[-1]._rates[0]._close): # replace 0 with currency to check
+            self.buy(globals.currencies[0], globals.currencies[1], 1)
+        elif isInLowerBand(candles[-1]._rates[0]._close): # replace 0 with currency to check
+            self.sell(globals.currencies[0], globals.currencies[1], 1)
+        else:
+            self.no_moves()

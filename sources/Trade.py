@@ -10,12 +10,26 @@
 #           Patricia Monfa-Matas    <patricia.monfa-matas@epitech.eu>
 #
 
+from enum import Enum
 
 import includes.globalDefinitions as globals
 from sources.utils.Logger import Logger
 from sources.utils.Utilities import Utilities
 from sources.Candle import Candle
 from sources.Stack import Stack
+from sources.Transaction import Transaction
+
+
+class Step(Enum):
+    """
+    Define steps for the main loop.
+    """
+
+    END = 0
+    SETTINGS = 1
+    TRAINING = 2
+    STRATEGY = 3
+
 
 
 class Trade():
@@ -24,13 +38,14 @@ class Trade():
     """
 
     def __init__(self):
-        self._state = True
+        self._state = Step.SETTINGS
         self._settings = {}
         self._candles = []
         self._stack = Stack()
 
         # Attributes to other classes
         self._utils = Utilities()
+        self._t = Transaction()
 
         # Run program's main loop
         self.run()
@@ -86,14 +101,21 @@ class Trade():
         """
 
         if command[0] == "settings" and len(command) is 3:
+            self._state = Step.SETTINGS
             self.initSettings(command)
         elif command[0] == "update" and len(command) == 4:
+            self._state = Step.TRAINING
             if f"{command[1]} {command[2]}" == "game next_candles":
                 newCandle = Candle(command[3])
                 if newCandle._state == globals.VALID:
                     self._candles.append(newCandle)
             elif f"{command[1]} {command[2]}" == "game stacks":
                 self._stack.update_s(command[3])
+        elif len(command) == 3 and\
+            f"{command[0]} {command[1]}" == "action order":
+            self._state = Step.STRATEGY
+            # Server is waiting for a move. (`sell`|`buy`|`pass`)
+            self._t.no_moves()
         else:
             Logger("Unrecognized command.")
 
@@ -102,7 +124,7 @@ class Trade():
         Main loop of the Trade project.
         """
 
-        while (self._state):
+        while (self._state != Step.END):
             inputCommand = self.getInput()
             # If no input: restart loop
             if len(inputCommand) is 0:
