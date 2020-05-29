@@ -22,7 +22,7 @@ from sources.Stack import Stack
 class Transaction:
 
     def __init__(self):
-        self._n = 50 # Default value for average computation
+        self._n = 20 # Default value for average computation
         # TO NOTE: [BTC_ETH, USDT_ETH, USDT_BTC] (in order)
         self._n_lastClosePrices = [[], [], []]
 
@@ -40,37 +40,6 @@ class Transaction:
         if inputCurrency in globals.currencies:
             return True
         return False
-
-    def no_moves(self):
-        """
-        Don't take any position.
-        """
-
-        print("pass")
-
-    def buy(self, currencyPaidWith: str, currencyReceived: str, amount: int):
-        """
-        Buy `amount` of `currencyReceived` in `currencyPaidWith`.
-
-        Args:
-            currencyPaidWith (str): Input currency of the transaction.
-            currencyReceived (str): Output currency of the transaction.
-            amount (int): Specifies how much to buy.
-        """
-
-        print("buy {}_{} {}".format(currencyPaidWith, currencyReceived, amount), end='')
-
-    def sell(self, currencyReceived: str, currencySold: str, amount: int):
-        """
-        Sell `amount` of `currencySold` in `currencyReceived`.
-
-        Args:
-            currencyReceived (str): Ouput currency of the transaction.
-            currencySold (str): Input currency of the transaction.
-            amount (int): Specifies how much to sell.
-        """
-
-        print("sell {}_{} {}".format(currencyReceived, currencySold, amount), end='')
 
     def update_lastClosePrices(self, candle: Candle) -> None:
         for i in range(len(self._n_lastClosePrices)):
@@ -104,11 +73,54 @@ class Transaction:
         """
         return np.std(values)
 
+    def no_moves(self):
+        """
+        Don't take any position.
+        """
+
+        print("pass")
+
+    def buy(self, currencyPaidWith: str, currencyReceived: str, amount: int):
+        """
+        Buy `amount` of `currencyReceived` in `currencyPaidWith`.
+
+        Args:
+            currencyPaidWith (str): Input currency of the transaction.
+            currencyReceived (str): Output currency of the transaction.
+            amount (int): Specifies how much to buy.
+        """
+
+        print("buy {}_{} {}".format(currencyPaidWith, currencyReceived, amount), end='')
+
+    def sell(self, currencyReceived: str, currencySold: str, amount: int):
+        """
+        Sell `amount` of `currencySold` in `currencyReceived`.
+
+        Args:
+            currencyReceived (str): Ouput currency of the transaction.
+            currencySold (str): Input currency of the transaction.
+            amount (int): Specifies how much to sell.
+        """
+
+        print("sell {}_{} {}".format(currencyReceived, currencySold, amount), end='')
 
     def transaction(self, currencyIn: str, currencyOut: str,
-                    moneyIn: float, moneyOut: float,
-                    candles: list, pastAction: bool) -> bool:
+                            moneyIn: float, moneyOut: float,
+                            candles: list, pastAction: bool) -> bool:
+        """
+        Decide to buy, sell or pass.
 
+        Args:
+            currencyIn (str): The input currency of the transaction.
+            currencyOut (str): The output currency of the transaction.
+            moneyIn (float): The stack of the input currency.
+            moneyOut (float): The stack of the output currency.
+            candles (list): List of the registered candles.
+            pastAction (bool): True if has already bought something, False otherwise.
+
+        Returns:
+            bool: True if has bought something, False otherwise.
+        """
         def fetchClosePrices(currencyIn: str, currencyOut: str) -> list:
             if f"{currencyIn}_{currencyOut}" == "BTC_ETH":
                 return self._n_lastClosePrices[0]
@@ -157,5 +169,5 @@ class Transaction:
         if action is False:
             self.no_moves()
         else:
-            # Print an RETURN character
+            # Print a RETURN character
             print()
