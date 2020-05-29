@@ -54,10 +54,10 @@ class Rate():
         # Check the pair of currencies
         if len(inputPair) is not 2:
             Logger("Might be a pair of currencies such as `currency_currency`.")
-            pass
         elif isValidCurrency(inputPair[0]) is False or isValidCurrency(inputPair[1]) is False:
             Logger("Wrong currency.")
-            pass
+        elif inputPair[0] == inputPair[1]:
+            Logger("Two times the same currency.")
         else:
             self._currency1 = inputPair[0]
             self._currency2 = inputPair[1]

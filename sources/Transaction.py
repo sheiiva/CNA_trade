@@ -22,10 +22,11 @@ from sources.Stack import Stack
 class Transaction:
 
     def __init__(self):
-        self._n = 20 # Default value for average computation
-        self._n_lastClosePrices = []
+        self._n = 50 # Default value for average computation
+        # TO NOTE: [BTC_ETH, USDT_ETH, USDT_BTC] (in order)
+        self._n_lastClosePrices = [[], [], []]
 
-    def isValidCurrency(self, inputCurrency: str) -> bool:
+    def isValidCurrency(self, inputCurrency: str) -> bool: # MOVE AWAY FROM THUS FILE
         """
         Check if `inputCurrency` is a valid currency.
 
@@ -45,7 +46,7 @@ class Transaction:
         Don't take any position.
         """
 
-        print("no_moves")
+        print("pass")
 
     def buy(self, currencyPaidWith: str, currencyReceived: str, amount: int):
         """
@@ -57,12 +58,7 @@ class Transaction:
             amount (int): Specifies how much to buy.
         """
 
-
-        if self.isValidCurrency(currencyPaidWith) is False\
-        or self.isValidCurrency(currencyReceived) is False:
-            Logger("Wrong currencies for buying transaction.")
-        else:
-            print("buy {}_{} {}".format(currencyPaidWith, currencyReceived, amount))
+        print("buy {}_{} {}".format(currencyPaidWith, currencyReceived, amount), end='')
 
     def sell(self, currencyReceived: str, currencySold: str, amount: int):
         """
@@ -74,74 +70,92 @@ class Transaction:
             amount (int): Specifies how much to sell.
         """
 
-        if self.isValidCurrency(currencyReceived) is False\
-        or self.isValidCurrency(currencySold) is False:
-            Logger("Wrong currencies for selling transaction.")
-        else:
-            print("sell {}_{} {}".format(currencyReceived, currencySold, amount))
+        print("sell {}_{} {}".format(currencyReceived, currencySold, amount), end='')
 
-    def getLastNClosingPrices(self, candles: list) -> list:
+    def update_lastClosePrices(self, candle: Candle) -> None:
+        for i in range(len(self._n_lastClosePrices)):
+            self._n_lastClosePrices[i].append(candle._rates[i]._close)
+            # Keep only the `._n` last.
+            # self._n_lastClosePrices[i] = self._n_lastClosePrices[i][-self._n:]
+
+    def computeSimpleMeanAverage(self, values: list) -> int:
         """
-        Get the last `self._n` closing prices from input candles.
+        Compute the average of the list's values.
 
         Args:
-            candles (list): The sources candles.
-        Returns:
-            list: A list containing the last `self._n` closing prices.
-        """
- 
-        def getClosingPrices(candle: Candle, rate: int) -> float:
-            if rate >= 0 and rate <= 2:
-                return candle._rates[rate]._close
-            return 0.
-
-        ret = [[], [], []]
-
-        for candle in candles:
-            for i in range(3):
-                ret[i].append(getClosingPrices(candle, i))
-
-        return [last[-self._n:] for last in ret]
-
-    def computeSimpleMeanAverage(self) -> int:
-        """
-        Compute a Simple Mean Average (SMA) of the last `._n` closing prices.
+            values (list): Input list.
 
         Returns:
-            int: The Simple Mean Average (SMA).
+            int: Average of list's values.
         """
+        if len(values) is 0:
+            return 0
+        return sum(values)/len(values)
 
-        return [sum(line)/len(line) for line in self._n_lastClosePrices]
-
-    def comput_standarDeviation(self) -> int:
+    def comput_standarDeviation(self, values: list) -> int:
         """
-        Compute a Standard Deviation (std) of the last `._n` closing prices.
+        Compute the standard deviation of the list's values.
+
+        Args:
+            values (list): Input list.
 
         Returns:
-            int: The standard deviation (std).
+            int: Standard deviation of list's values.
         """
+        return np.std(values)
 
-        return [np.std(line) for line in self._n_lastClosePrices]
 
-    def strategy(self, candles: Candle, stack: Stack):
+    def transaction(self, currencyIn: str, currencyOut: str,
+                    moneyIn: float, moneyOut: float,
+                    candles: list, pastAction: bool) -> bool:
 
-        sma = self.computeSimpleMeanAverage()
-        std = self.comput_standarDeviation()
+        def fetchClosePrices(currencyIn: str, currencyOut: str) -> list:
+            if f"{currencyIn}_{currencyOut}" == "BTC_ETH":
+                return self._n_lastClosePrices[0]
+            elif f"{currencyIn}_{currencyOut}" == "USDT_ETH":
+                return self._n_lastClosePrices[1]
+            elif f"{currencyIn}_{currencyOut}" == "USDT_BTC":
+                return self._n_lastClosePrices[1]
 
-        def isInUpperBand(value: float) -> bool:
-            if value <= (sma + (2 * std)) and value >= (sma + std):
-                return True
-            return False
-        
-        def isInLowerBand(value: float) -> bool:
-            if value >= (sma - (2 * std)) and value <= (sma + std):
-                return True
-            return False
+        # Get `._n` last close prices of the currency pair
+        closeValues = fetchClosePrices(currencyIn, currencyOut)
+        lastCloseValue = closeValues[-1]
+        #
+        mean = self.computeSimpleMeanAverage(closeValues)
+        std = self.comput_standarDeviation(closeValues)
+        # Compute Bollinger Bands values from close prices
+        highBand = mean + (2*std)
+        lowBand = mean - (2*std)
+        # Strategy
+        moneyStack = moneyIn / lastCloseValue
+        buyValue = ((lowBand - lastCloseValue) / 10) * moneyStack
+        sellValue = ((lastCloseValue - highBand) / 10) * moneyOut
 
-        # for i in range(len(globals.currencies)):
-        if isInUpperBand(candles[-1]._rates[0]._close): # replace 0 with currency to check
-            self.buy(globals.currencies[0], globals.currencies[1], 1)
-        elif isInLowerBand(candles[-1]._rates[0]._close): # replace 0 with currency to check
-            self.sell(globals.currencies[0], globals.currencies[1], 1)
+        if (lastCloseValue < lowBand and moneyStack > buyValue and buyValue > 0.001):
+            # BUY
+            if (pastAction):
+                print(";", end='')
+            self.buy(currencyIn, currencyOut, buyValue)
+            return True
+        elif (lastCloseValue > highBand and moneyOut > sellValue and sellValue > 0.9):
+            # SELL
+            if (pastAction):
+                print(";", end='')
+            self.sell(currencyIn, currencyOut, sellValue)
+            return True
         else:
+            return False
+
+    def strategy(self, candles: list, stack: Stack) -> None:
+
+        action = False
+
+        action = self.transaction("USDT", "ETH", stack._USDT, stack._ETH, candles, action) or action
+        action = self.transaction("BTC", "ETH", stack._BTC, stack._ETH, candles, action) or action
+        action = self.transaction("USDT", "BTC", stack._USDT, stack._BTC, candles, action) or action
+
+        if action is False:
             self.no_moves()
+        else:
+            # Print an RETURN character
+            print()
