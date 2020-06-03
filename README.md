@@ -29,15 +29,18 @@ There are two ways to install the application:
 ## USAGE:
 
 * Create the binary
+
 ```
 >> make
 ```
 
 * Set the bot
+
 Go to `File->Settings`
 In "**Command[...]**" field, provide the path to the previously generated binary called `trade`.
 
 * Set datasets
+
 A default datasets is provided. You can otherwise give a path to your own dataset in the
 "**Location of the .csv file with candle data. [...]**" field.
 
