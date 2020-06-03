@@ -19,6 +19,7 @@ from sources.utils.Utilities import Utilities
 CURRENCY = 0
 VALUE = 1
 
+
 class Stack():
     """
     Stack of money in three currencies:
@@ -67,16 +68,14 @@ class Stack():
             if len(update) is not 2:
                 Logger("Wrong format. Command: update_s")
             elif update[CURRENCY] in globals.currencies is False:
-                Logger(f"{update[CURRENCY]} is not a valid currency. Currencies are {globals.currencies}")
+                Logger(
+                    f"{update[CURRENCY]} is not a valid currency."
+                    f"Currencies are {globals.currencies}"
+                )
             elif self._utils.isFloat(update[VALUE]) is False:
-                Logger("Wrong value to update for {}.".format(update[CURRENCY]))
+                Logger("Wrong {} value.".format(update[CURRENCY]))
             else:
-                self.updateCurrency(currency=update[CURRENCY], value=update[VALUE])
-
-    def showStack(self) -> None:
-        """
-        Log out the current stack.
-        """
-
-        Logger(f"STOCK:\n\tUSDT: {self._USDT}\n\tETH: {self._ETH}\n\tBTC: {self._BTC}",
-                logType="INFO")
+                self.updateCurrency(
+                    currency=update[CURRENCY],
+                    value=update[VALUE]
+                )

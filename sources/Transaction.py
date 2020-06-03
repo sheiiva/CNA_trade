@@ -19,14 +19,15 @@ from sources.Candle import Candle
 from sources.Rate import Rate
 from sources.Stack import Stack
 
+
 class Transaction:
 
     def __init__(self):
-        self._n = 20 # Default value for average computation
+        self._n = 20  # Default value for average computation
         # TO NOTE: [BTC_ETH, USDT_ETH, USDT_BTC] (in order)
         self._n_lastClosePrices = [[], [], []]
 
-    def isValidCurrency(self, inputCurrency: str) -> bool: # MOVE AWAY FROM THUS FILE
+    def isValidCurrency(self, inputCurrency: str) -> bool:
         """
         Check if `inputCurrency` is a valid currency.
 
@@ -90,7 +91,9 @@ class Transaction:
             amount (int): Specifies how much to buy.
         """
 
-        print("buy {}_{} {}".format(currencyPaidWith, currencyReceived, amount), end='')
+        print("buy {}_{} {}".format(currencyPaidWith,
+                                    currencyReceived,
+                                    amount), end='')
 
     def sell(self, currencyReceived: str, currencySold: str, amount: int):
         """
@@ -102,7 +105,9 @@ class Transaction:
             amount (int): Specifies how much to sell.
         """
 
-        print("sell {}_{} {}".format(currencyReceived, currencySold, amount), end='')
+        print("sell {}_{} {}".format(currencyReceived,
+                                     currencySold,
+                                     amount), end='')
 
     def transaction(self, currencyIn: str, currencyOut: str,
                             moneyIn: float, moneyOut: float,
@@ -116,7 +121,7 @@ class Transaction:
             moneyIn (float): The stack of the input currency.
             moneyOut (float): The stack of the output currency.
             candles (list): List of the registered candles.
-            pastAction (bool): True if has already bought something, False otherwise.
+            pastAction (bool): True if has already bought something.
 
         Returns:
             bool: True if has bought something, False otherwise.
@@ -162,9 +167,15 @@ class Transaction:
 
         action = False
 
-        action = self.transaction("USDT", "ETH", stack._USDT, stack._ETH, candles, action) or action
-        action = self.transaction("BTC", "ETH", stack._BTC, stack._ETH, candles, action) or action
-        action = self.transaction("USDT", "BTC", stack._USDT, stack._BTC, candles, action) or action
+        action = self.transaction(
+            "USDT", "ETH", stack._USDT,
+            stack._ETH, candles, action) or action
+        action = self.transaction(
+            "BTC", "ETH", stack._BTC,
+            stack._ETH, candles, action) or action
+        action = self.transaction(
+            "USDT", "BTC", stack._USDT,
+            stack._BTC, candles, action) or action
 
         if action is False:
             self.no_moves()

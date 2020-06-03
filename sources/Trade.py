@@ -31,7 +31,6 @@ class Step(Enum):
     STRATEGY = 3
 
 
-
 class Trade():
     """
     Main class of the Trade project.
@@ -89,7 +88,7 @@ class Trade():
             value = inputs[globals.VALUE]
 
         if inputs[globals.VARIABLE] == "initial_stack":
-                self._stack._USDT = value
+            self._stack._USDT = value
         self._settings[inputs[globals.VARIABLE]] = value
 
     def fetchCommand(self, command: list) -> None:
@@ -101,7 +100,7 @@ class Trade():
         """
 
         if command[0] == "settings" and len(command) is 3:
-            self._state = Step.SETTINGS # STATE USEFULL ?
+            self._state = Step.SETTINGS  # STATE USEFULL ?
             self.initSettings(command)
         elif command[0] == "update" and len(command) == 4:
             self._state = Step.TRAINING  # STATE USEFULL ?
@@ -112,8 +111,7 @@ class Trade():
                     self._t.update_lastClosePrices(newCandle)
             elif f"{command[1]} {command[2]}" == "game stacks":
                 self._stack.update_s(command[3])
-        elif len(command) == 3 and\
-            f"{command[0]} {command[1]}" == "action order":
+        elif f"{command[0]} {command[1]}" == "action order":
             self._state = Step.STRATEGY  # STATE USEFULL ?
             # Server is waiting for a move. (`sell`|`buy`|`pass`)
             self._t.strategy(candles=self._candles, stack=self._stack)

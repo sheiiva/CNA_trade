@@ -44,7 +44,11 @@ class Candle():
             self._state = globals.INVALID
             return None
 
-        outputRates = [Rate(inputsRate[0]), Rate(inputsRate[1]), Rate(inputsRate[2])]
+        outputRates = [
+            Rate(inputsRate[0]),
+            Rate(inputsRate[1]),
+            Rate(inputsRate[2])
+        ]
         # Check for rates' validity
         for rate in outputRates:
             if rate._state is globals.INVALID:

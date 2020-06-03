@@ -53,8 +53,9 @@ class Rate():
 
         # Check the pair of currencies
         if len(inputPair) is not 2:
-            Logger("Might be a pair of currencies such as `currency_currency`.")
-        elif isValidCurrency(inputPair[0]) is False or isValidCurrency(inputPair[1]) is False:
+            Logger("Might be a pair such as `currency_currency`.")
+        elif isValidCurrency(inputPair[0]) is False\
+            or isValidCurrency(inputPair[1]) is False:
             Logger("Wrong currency.")
         elif inputPair[0] == inputPair[1]:
             Logger("Two times the same currency.")
@@ -70,7 +71,8 @@ class Rate():
             inputDate (str): Input string to be checked.
 
         Returns:
-            int: Return None if it cannot initialize the date. Return the cast value otherwise.
+            int: Return None if it cannot initialize the date.
+                 Return the cast value otherwise.
         """
 
         if Utilities().isInt(inputDate) is False:
@@ -87,7 +89,8 @@ class Rate():
             inputPrice (str): Input string to be checked.
 
         Returns:
-            float: Return None if it cannot initialize the price. Return the cast value otherwise.
+            float: Return None if it cannot initialize the price.
+                   Return the cast value otherwise.
         """
 
         if Utilities().isFloat(inputPrice) is False:
