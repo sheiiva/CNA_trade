@@ -43,6 +43,8 @@ clean:
 	$(RM) -r $(INCLUDE)__pycache__
 	$(RM) -r $(SOURCES)__pycache__
 	$(RM) -r $(TESTS)__pycache__
+	$(RM) .coverage
+	$(RM) -r .pytest_cache
 
 fclean: clean
 	$(PRINT) "\n------->\tREMOVE BINARIES\n"
@@ -50,7 +52,7 @@ fclean: clean
 
 tests_run: fclean
 	$(PRINT) "\nLET'S TEST:\n"
-	@python -m unittest -v $(TESTS_SRC)
+	@python -m pytest -v $(TESTS_SRC) --cov=$(SOURCES)
 
 re: fclean all
 

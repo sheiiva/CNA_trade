@@ -35,5 +35,9 @@ installation/
 node_modules
 
 # PYTHON
+.coverage
+.pytest_cache
 *__pycache__*
+
+#
 *tmp*
