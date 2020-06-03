@@ -26,6 +26,7 @@ def test_constructor():
     assert stack._ETH == 0
     assert stack._BTC == 0
 
+
 def test_update_s_normalCase():
     stack = Stack()
 
@@ -34,6 +35,7 @@ def test_update_s_normalCase():
     assert stack._USDT == 42
     assert stack._ETH == 21
     assert stack._BTC == 12.1
+
 
 def test_update_s_normalCase_other_order():
     stack = Stack()
@@ -44,6 +46,7 @@ def test_update_s_normalCase_other_order():
     assert stack._ETH == 21
     assert stack._BTC == 12.1
 
+
 def test_update_s_not_a_float():
     stack = Stack()
 
@@ -52,6 +55,7 @@ def test_update_s_not_a_float():
     assert stack._USDT == 42
     assert stack._ETH == 0
     assert stack._BTC == 12.1
+
 
 def test_update_s_wrongFormat():
     stack = Stack()
@@ -62,6 +66,7 @@ def test_update_s_wrongFormat():
     assert stack._ETH == 0
     assert stack._BTC == 0
 
+
 def test_update_s_wrongCurrencyFormat():
     stack = Stack()
 
@@ -71,6 +76,7 @@ def test_update_s_wrongCurrencyFormat():
     assert stack._ETH == 0
     assert stack._BTC == 11
 
+
 def test_update_s_wrongCurrency(caplog):
     stack = Stack()
 
@@ -79,7 +85,7 @@ def test_update_s_wrongCurrency(caplog):
     assert stack._USDT == 12.1
     assert stack._ETH == 0
     assert stack._BTC == 1
-     
+
     with caplog.at_level(logging.ERROR):
         assert caplog.records[0].message == f"None is not a valid currency."\
                                             f"Currencies are {globals.currencies}"
@@ -93,6 +99,6 @@ def test_update_s_notAllCurrencies(caplog):
     assert stack._USDT == 0
     assert stack._ETH == 0
     assert stack._BTC == 0
- 
+
     with caplog.at_level(logging.ERROR):
         assert caplog.records[0].message == "Might update the three currencies."

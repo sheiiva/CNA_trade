@@ -21,22 +21,25 @@ def test_isIntNormalcase():
 
     utils = Utilities()
 
-    assert utils.isInt(42) == True
+    assert utils.isInt(42)
+
 
 def test_isIntWrongcase():
 
     utils = Utilities()
 
-    assert utils.isInt("Not an integer") == False
+    assert not utils.isInt("Not an integer")
+
 
 def test_isFloatNormalcase():
 
     utils = Utilities()
 
-    assert utils.isFloat(42.) == True
+    assert utils.isFloat(42.)
+
 
 def test_isFloatWrongcase():
 
     utils = Utilities()
 
-    assert utils.isFloat("Not a float") == False
+    assert not utils.isFloat("Not a float")

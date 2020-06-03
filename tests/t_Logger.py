@@ -12,7 +12,6 @@
 
 
 import pytest
-
 import sys
 import logging
 
@@ -26,6 +25,7 @@ def test_ERRORLevelCase(caplog):
 
     with caplog.at_level(logging.ERROR):
         assert caplog.records[0].message == "Hello world!"
+
 
 def test_wrongLevelCase(caplog):
 

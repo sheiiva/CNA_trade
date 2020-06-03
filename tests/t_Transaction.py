@@ -22,13 +22,15 @@ def test_isValidCurrency_normalCase():
 
     transaction = Transaction()
 
-    assert transaction.isValidCurrency("ETH") == True
+    assert transaction.isValidCurrency("ETH")
+
 
 def test_isValidCurrency_wrongCase():
 
     transaction = Transaction()
 
-    assert transaction.isValidCurrency("ETHH") == False
+    assert not transaction.isValidCurrency("ETHH")
+
 
 def test_update_lastClosePrices_normalCase():
 
@@ -50,7 +52,7 @@ def test_update_lastClosePrices_normalCase():
     expected = [
         [0.09119839, 0.0907592, 0.09042024],
         [1019.4, 979.56000012, 990.00000004],
-        [11302, 10959.36154234, 10982.89484619] 
+        [11302, 10959.36154234, 10982.89484619]
     ]
 
     for candle in candles:
@@ -60,6 +62,7 @@ def test_update_lastClosePrices_normalCase():
     for i in range(len(expected)):
         assert transaction._period_lastClosePrices[i] == expected[i]
 
+
 def test_computeSimpleMeanAverage_normalCase():
 
     transaction = Transaction()
@@ -68,6 +71,7 @@ def test_computeSimpleMeanAverage_normalCase():
 
     assert transaction.computeSimpleMeanAverage(values) == 5
 
+
 def test_computeSimpleMeanAverage_emptyListCase():
 
     transaction = Transaction()
@@ -75,6 +79,7 @@ def test_computeSimpleMeanAverage_emptyListCase():
     values = []
 
     assert transaction.computeSimpleMeanAverage(values) == 0
+
 
 def test_comput_standarDeviation_normalCase():
 
@@ -86,14 +91,16 @@ def test_comput_standarDeviation_normalCase():
 
     assert ret == 1.6663911618021237
 
+
 def test_no_moves_normalCase(capsys):
 
     transaction = Transaction()
 
     transaction.no_moves()
     redir = capsys.readouterr()
-    
+
     assert redir.out == "pass\n"
+
 
 def test_buy_normalCase(capsys):
 
@@ -101,8 +108,9 @@ def test_buy_normalCase(capsys):
 
     transaction.buy("USDT", "ETH", 2)
     redir = capsys.readouterr()
-    
+
     assert redir.out == "buy USDT_ETH 2"
+
 
 def test_sell_normalCase(capsys):
 
@@ -110,5 +118,5 @@ def test_sell_normalCase(capsys):
 
     transaction.sell("USDT", "ETH", 2)
     redir = capsys.readouterr()
-    
+
     assert redir.out == "sell USDT_ETH 2"
