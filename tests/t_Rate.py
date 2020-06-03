@@ -12,6 +12,7 @@
 
 
 import pytest
+import logging
 
 import includes.globalDefinitions as globals
 from sources.Rate import Rate
@@ -90,3 +91,12 @@ def test_wrongVolumeValue():
     rate = Rate("USDT_BTC,1516147200,11600.12523891,11032.9211865,11041.42197477,11214.06052489,volume")
 
     assert rate._state == globals.INVALID
+
+def test_twiceSameCurrency(caplog):
+
+    rate = Rate("USDT_USDT,1516147200,11600.12523891,11032.9211865,11041.42197477,11214.06052489,volume")
+
+    assert rate._state == globals.INVALID
+
+    with caplog.at_level(logging.ERROR):
+        assert caplog.records[0].message == "Two times the same currency."

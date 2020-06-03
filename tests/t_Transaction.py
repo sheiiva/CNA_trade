@@ -66,9 +66,15 @@ def test_computeSimpleMeanAverage_normalCase():
 
     values = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
-    ret = transaction.computeSimpleMeanAverage(values)
+    assert transaction.computeSimpleMeanAverage(values) == 5
 
-    assert ret == 5
+def test_computeSimpleMeanAverage_emptyListCase():
+
+    transaction = Transaction()
+
+    values = []
+
+    assert transaction.computeSimpleMeanAverage(values) == 0
 
 def test_comput_standarDeviation_normalCase():
 
@@ -79,3 +85,30 @@ def test_comput_standarDeviation_normalCase():
     ret = transaction.comput_standarDeviation(values)
 
     assert ret == 1.6663911618021237
+
+def test_no_moves_normalCase(capsys):
+
+    transaction = Transaction()
+
+    transaction.no_moves()
+    redir = capsys.readouterr()
+    
+    assert redir.out == "pass\n"
+
+def test_buy_normalCase(capsys):
+
+    transaction = Transaction()
+
+    transaction.buy("USDT", "ETH", 2)
+    redir = capsys.readouterr()
+    
+    assert redir.out == "buy USDT_ETH 2"
+
+def test_sell_normalCase(capsys):
+
+    transaction = Transaction()
+
+    transaction.sell("USDT", "ETH", 2)
+    redir = capsys.readouterr()
+    
+    assert redir.out == "sell USDT_ETH 2"

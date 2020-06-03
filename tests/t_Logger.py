@@ -13,27 +13,23 @@
 
 import pytest
 
-from io import StringIO
 import sys
+import logging
 
 import includes.globalDefinitions as globals
 from sources.utils.Logger import Logger
 
 
-def test_normalCase():
-#     # Create the in-memory `file`.
-#     _tmpStream = StringIO()
-#     # Replace default stderr with the tempory stream file.
-#     sys.stderr = _tmpStream
+def test_ERRORLevelCase(caplog):
 
     Logger("Hello world!")
 
-#     # Stock the output to remove the final '\n' of the stream.
-#     output = _tmpStream.getvalue()[:-1]
+    with caplog.at_level(logging.ERROR):
+        assert caplog.records[0].message == "Hello world!"
 
-#     self.assertEqual("ERROR:root:Hello world!", output)
+def test_wrongLevelCase(caplog):
 
-#     # Set the standard error output to the original output.
-#     sys.stderr = sys.__stderr__
-#     # Close the in-memory stream
-#     _tmpStream.close()
+    Logger("Hello world!", logType='WRONGTYPE')
+
+    with caplog.at_level(logging.ERROR):
+        assert caplog.records[0].message == "Wrong logging type."
