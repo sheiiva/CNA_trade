@@ -21,10 +21,9 @@ SOURCES		=	sources/
 TESTS		=	tests/
 
 
-TESTS_SRC	=	$(TESTS)t_main.py			\
+TESTS_SRC	=	$(TESTS)t_Rate.py			\
 				$(TESTS)t_Candle.py			\
 				$(TESTS)t_Logger.py			\
-				$(TESTS)t_Rate.py			\
 				$(TESTS)t_Stack.py			\
 				$(TESTS)t_Transaction.py	\
 				$(TESTS)t_Utilities.py

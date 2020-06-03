@@ -11,34 +11,32 @@
 #
 
 
-import unittest
+import pytest
 
 import includes.globalDefinitions as globals
 from sources.utils.Utilities import Utilities
 
 
-class TestUtilities(unittest.TestCase):
+def test_isIntNormalcase():
 
-    def test_isIntNormalcase(self):
+    utils = Utilities()
 
-        utils = Utilities()
+    assert utils.isInt(42) == True
 
-        self.assertTrue(utils.isInt(42))
+def test_isIntWrongcase():
 
-    def test_isIntWrongcase(self):
+    utils = Utilities()
 
-        utils = Utilities()
+    assert utils.isInt("Not an integer") == False
 
-        self.assertFalse(utils.isInt("Not an integer"))
+def test_isFloatNormalcase():
 
-    def test_isFloatNormalcase(self):
+    utils = Utilities()
 
-        utils = Utilities()
+    assert utils.isFloat(42.) == True
 
-        self.assertTrue(utils.isFloat(42.))
+def test_isFloatWrongcase():
 
-    def test_isFloatWrongcase(self):
+    utils = Utilities()
 
-        utils = Utilities()
-
-        self.assertFalse(utils.isFloat("Not a float"))
+    assert utils.isFloat("Not a float") == False
