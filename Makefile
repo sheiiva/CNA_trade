@@ -51,7 +51,7 @@ fclean: clean
 
 tests_run: fclean
 	$(PRINT) "\nLET'S TEST:\n"
-	@python -m pytest -v $(TESTS_SRC) --cov=$(SOURCES)
+	@python -m pytest -v $(TESTS_SRC) --cov=$(SOURCES) --cov-report=html
 
 re: fclean all
 

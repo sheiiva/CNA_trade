@@ -35,6 +35,7 @@ installation/
 node_modules
 
 # PYTHON
+htmlcov
 .coverage
 .pytest_cache
 *__pycache__*

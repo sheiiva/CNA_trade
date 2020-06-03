@@ -67,7 +67,7 @@ class Stack():
             update = currencyUpdate.split(sep=":")
             if len(update) is not 2:
                 Logger("Wrong format. Command: update_s")
-            elif update[CURRENCY] in globals.currencies is False:
+            elif (update[CURRENCY] in globals.currencies) is False:
                 Logger(
                     f"{update[CURRENCY]} is not a valid currency."
                     f"Currencies are {globals.currencies}"

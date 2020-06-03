@@ -12,9 +12,8 @@
 
 
 import pytest
-
 import sys
-from io import StringIO
+import logging
 
 import includes.globalDefinitions as globals
 from sources.Stack import Stack
@@ -72,11 +71,28 @@ def test_update_s_wrongCurrencyFormat():
     assert stack._ETH == 0
     assert stack._BTC == 11
 
-def test_update_s_wrongCurrency():
+def test_update_s_wrongCurrency(caplog):
     stack = Stack()
 
-    stack.update_s("ETHH:42,USDT:12.1,BTC:1")
+    stack.update_s("None:42,USDT:12.1,BTC:1")
 
     assert stack._USDT == 12.1
     assert stack._ETH == 0
     assert stack._BTC == 1
+     
+    with caplog.at_level(logging.ERROR):
+        assert caplog.records[0].message == f"None is not a valid currency."\
+                                            f"Currencies are {globals.currencies}"
+
+
+def test_update_s_notAllCurrencies(caplog):
+    stack = Stack()
+
+    stack.update_s("ETH:42")
+
+    assert stack._USDT == 0
+    assert stack._ETH == 0
+    assert stack._BTC == 0
+ 
+    with caplog.at_level(logging.ERROR):
+        assert caplog.records[0].message == "Might update the three currencies."
