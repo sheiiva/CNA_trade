@@ -89,6 +89,8 @@ class Trade():
 
         if inputs[globals.VARIABLE] == "initial_stack":
             self._stack._USDT = value
+        if inputs[globals.VARIABLE] == "candles_given":
+            self._t._period = int(value/2)
         self._settings[inputs[globals.VARIABLE]] = value
 
     def fetchCommand(self, command: list) -> None:

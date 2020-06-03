@@ -23,9 +23,9 @@ from sources.Stack import Stack
 class Transaction:
 
     def __init__(self):
-        self._n = 20  # Default value for average computation
+        self._period = 20  # Default value for average computation
         # TO NOTE: [BTC_ETH, USDT_ETH, USDT_BTC] (in order)
-        self._n_lastClosePrices = [[], [], []]
+        self._period_lastClosePrices = [[], [], []]
 
     def isValidCurrency(self, inputCurrency: str) -> bool:
         """
@@ -43,10 +43,10 @@ class Transaction:
         return False
 
     def update_lastClosePrices(self, candle: Candle) -> None:
-        for i in range(len(self._n_lastClosePrices)):
-            self._n_lastClosePrices[i].append(candle._rates[i]._close)
-            # Keep only the `._n` last.
-            # self._n_lastClosePrices[i] = self._n_lastClosePrices[i][-self._n:]
+        for i in range(len(self._period_lastClosePrices)):
+            self._period_lastClosePrices[i].append(candle._rates[i]._close)
+            # Keep only the `._period` last.
+            self._period_lastClosePrices[i] = self._period_lastClosePrices[i][-self._period:]
 
     def computeSimpleMeanAverage(self, values: list) -> int:
         """
@@ -128,13 +128,13 @@ class Transaction:
         """
         def fetchClosePrices(currencyIn: str, currencyOut: str) -> list:
             if f"{currencyIn}_{currencyOut}" == "BTC_ETH":
-                return self._n_lastClosePrices[0]
+                return self._period_lastClosePrices[0]
             elif f"{currencyIn}_{currencyOut}" == "USDT_ETH":
-                return self._n_lastClosePrices[1]
+                return self._period_lastClosePrices[1]
             elif f"{currencyIn}_{currencyOut}" == "USDT_BTC":
-                return self._n_lastClosePrices[1]
+                return self._period_lastClosePrices[2]
 
-        # Get `._n` last close prices of the currency pair
+        # Get `._period` last close prices of the currency pair
         closeValues = fetchClosePrices(currencyIn, currencyOut)
         lastCloseValue = closeValues[-1]
         #
@@ -148,13 +148,13 @@ class Transaction:
         buyValue = ((lowBand - lastCloseValue) / 10) * moneyStack
         sellValue = ((lastCloseValue - highBand) / 10) * moneyOut
 
-        if (lastCloseValue < lowBand and moneyStack > buyValue and buyValue > 0.001):
+        if (lastCloseValue < lowBand and moneyStack > buyValue and buyValue > 0.000001):
             # BUY
             if (pastAction):
                 print(";", end='')
             self.buy(currencyIn, currencyOut, buyValue)
             return True
-        elif (lastCloseValue > highBand and moneyOut > sellValue and sellValue > 0.9):
+        elif (lastCloseValue > highBand and moneyOut > sellValue and sellValue > 0.000001):
             # SELL
             if (pastAction):
                 print(";", end='')
@@ -168,11 +168,13 @@ class Transaction:
         action = False
 
         action = self.transaction(
-            "USDT", "ETH", stack._USDT,
-            stack._ETH, candles, action) or action
-        action = self.transaction(
             "BTC", "ETH", stack._BTC,
             stack._ETH, candles, action) or action
+
+        action = self.transaction(
+            "USDT", "ETH", stack._USDT,
+            stack._ETH, candles, action) or action
+
         action = self.transaction(
             "USDT", "BTC", stack._USDT,
             stack._BTC, candles, action) or action
