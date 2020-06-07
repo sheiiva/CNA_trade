@@ -23,7 +23,7 @@ from sources.Stack import Stack
 class Transaction:
 
     def __init__(self):
-        self._period = 20  # Default value for average computation
+        self._period = 0  # Default value for average computation
         # TO NOTE: [BTC_ETH, USDT_ETH, USDT_BTC] (in order)
         self._period_lastClosePrices = [[], [], []]
 
@@ -45,8 +45,9 @@ class Transaction:
     def update_lastClosePrices(self, candle: Candle) -> None:
         for i in range(len(self._period_lastClosePrices)):
             self._period_lastClosePrices[i].append(candle._rates[i]._close)
-            # Keep only the `._period` last.
-            self._period_lastClosePrices[i] = self._period_lastClosePrices[i][-self._period:]
+            if (self._period) is not 0:
+                # Keep only the `._period` last.
+                self._period_lastClosePrices[i] = self._period_lastClosePrices[i][-self._period:]
 
     def computeSimpleMeanAverage(self, values: list) -> int:
         """
@@ -148,13 +149,13 @@ class Transaction:
         buyValue = ((lowBand - lastCloseValue) / 10) * moneyStack
         sellValue = ((lastCloseValue - highBand) / 10) * moneyOut
 
-        if (lastCloseValue < lowBand and moneyStack > buyValue and buyValue > 0.000001):
+        if (lastCloseValue < lowBand and moneyStack > buyValue and buyValue > 0.0001):
             # BUY
             if (pastAction):
                 print(";", end='')
             self.buy(currencyIn, currencyOut, buyValue)
             return True
-        elif (lastCloseValue > highBand and moneyOut > sellValue and sellValue > 0.000001):
+        elif (lastCloseValue > highBand and moneyOut > sellValue and sellValue > 0.0001):
             # SELL
             if (pastAction):
                 print(";", end='')
