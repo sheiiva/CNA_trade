@@ -41,6 +41,7 @@ clean:
 	$(RM) -r __pycache__
 	$(RM) -r $(INCLUDE)__pycache__
 	$(RM) -r $(SOURCES)__pycache__
+	$(RM) -r $(SOURCES)utils/__pycache__
 	$(RM) -r $(TESTS)__pycache__
 	$(RM) .coverage
 	$(RM) -r .pytest_cache
